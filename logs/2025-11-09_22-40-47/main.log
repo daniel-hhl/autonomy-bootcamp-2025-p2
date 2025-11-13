@@ -1,0 +1,7 @@
+22:40:47: [INFO] [C:\Coding\WARG Autonomy\autonomy-bootcamp-2025-p2\modules\common\modules\logger\logger_main_setup.py | setup_main_logger | 62] main logger initialized
+22:40:48: [INFO] [C:\Coding\WARG Autonomy\autonomy-bootcamp-2025-p2\documentation\main_multiprocess_example.py | main | 182] Started
+22:40:50: [INFO] [C:\Coding\WARG Autonomy\autonomy-bootcamp-2025-p2\documentation\main_multiprocess_example.py | main | 188] Paused
+22:40:54: [INFO] [C:\Coding\WARG Autonomy\autonomy-bootcamp-2025-p2\documentation\main_multiprocess_example.py | main | 192] Resumed
+22:40:56: [INFO] [C:\Coding\WARG Autonomy\autonomy-bootcamp-2025-p2\documentation\main_multiprocess_example.py | main | 199] Requested exit
+22:40:57: [INFO] [C:\Coding\WARG Autonomy\autonomy-bootcamp-2025-p2\documentation\main_multiprocess_example.py | main | 205] Queues cleared
+22:40:57: [INFO] [C:\Coding\WARG Autonomy\autonomy-bootcamp-2025-p2\documentation\main_multiprocess_example.py | main | 211] Stopped
