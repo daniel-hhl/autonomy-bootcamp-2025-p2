@@ -38,6 +38,7 @@ class HeartbeatSender:
 
         # Do any intializiation here
         self.local_logger = local_logger
+        self.connection = connection
 
     def run(
         self

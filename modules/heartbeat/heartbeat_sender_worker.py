@@ -51,7 +51,7 @@ def heartbeat_sender_worker(
     # =============================================================================================
     # Instantiate class object (heartbeat_sender.HeartbeatSender)
 
-    sender_instance = heartbeat_sender.HeartbeatSender(connection, local_logger)
+    value, sender_instance = heartbeat_sender.HeartbeatSender.create(connection, local_logger)
     # Check if connection can be established
     if not result:
         local_logger.error("Failed to establish heartbeat sender", True)
@@ -63,8 +63,14 @@ def heartbeat_sender_worker(
         controller.check_pause()
 
         # send heartbeat signal through running instance
+        start = time.time()
         result, value = sender_instance.run()
-        time.sleep(1)
+        time_elapsed = time.time() - start
+        local_logger.info("Heartbeat sent")
+
+        # create a system for time to be exactly one second
+        sleep_time = 1 - time_elapsed
+        time.sleep(sleep_time)
 
 # =================================================================================================
 #                            ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
