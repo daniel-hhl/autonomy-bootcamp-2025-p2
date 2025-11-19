@@ -76,8 +76,8 @@ def read_queue(
     """
     while not controller.is_exit_requested():
         if not queue.queue.empty():
-            command = queue.queue.get()
-            main_logger.info(command)
+            command_read = queue.queue.get()
+            main_logger.info(command_read)
 
 
 def put_queue(
