@@ -106,7 +106,7 @@ def main() -> int:
 
     # Create worker properties for each worker type (what inputs it takes, how many workers)
     # Heartbeat sender
-    result, sender_properties = worker_manager.WorkerManager.create(
+    result, sender_properties = worker_manager.WorkerProperties.create(
         HEARTBEAT_SENDER_WORKER_COUNT,  # How many workers
         heartbeat_sender_worker.heartbeat_sender_worker,  # What's the function that this worker runs
         (connection,),
@@ -120,7 +120,7 @@ def main() -> int:
         return -1
 
     # Heartbeat receiver
-    result, receiver_properties = worker_manager.WorkerManager.create(
+    result, receiver_properties = worker_manager.WorkerProperties.create(
         HEARTBEAT_RECEIVER_WORKER_COUNT,  # How many workers
         heartbeat_receiver_worker.heartbeat_receiver_worker,  # What's the function that this worker runs
         (connection,),
@@ -134,7 +134,7 @@ def main() -> int:
         return -1
 
     # Telemetry
-    result, telemetry_properties = worker_manager.WorkerManager.create(
+    result, telemetry_properties = worker_manager.WorkerProperties.create(
         TELEMETRY_WORKER_COUNT,  # How many workers
         telemetry_worker.telemetry_worker,  # What's the function that this worker runs
         (connection,),
@@ -148,7 +148,7 @@ def main() -> int:
         return -1
 
     # Command
-    result, command_properties = worker_manager.WorkerManager.create(
+    result, command_properties = worker_manager.WorkerProperties.create(
         COMMAND_WORKER_COUNT,  # How many workers
         command_worker.command_worker,  # What's the function that this worker runs
         (
