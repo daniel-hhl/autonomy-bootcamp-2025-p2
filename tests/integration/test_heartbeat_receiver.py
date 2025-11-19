@@ -54,7 +54,7 @@ def stop(
     """
     Stop the workers.
     """
-    controller.request_exit
+    controller.request_exit()
 
 def read_queue(
     queue: queue_proxy_wrapper.QueueProxyWrapper,
