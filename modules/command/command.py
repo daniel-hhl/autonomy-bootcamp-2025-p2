@@ -104,7 +104,6 @@ class Command:  # pylint: disable=too-many-instance-attributes
                 0,
                 self.target.z,
             )
-            self.local_logger.info(f"CHANGE_ALTITUDE: {height_diff:.2f}")
             return True, f"CHANGE_ALTITUDE {height_diff:.2f}"
 
         # Adjust direction (yaw) using MAV_CMD_CONDITION_YAW (115). Must use relative angle to current state
@@ -134,7 +133,6 @@ class Command:  # pylint: disable=too-many-instance-attributes
                     0,
                     0,
                 )
-                self.local_logger.info(f"CHANGING_YAW {yaw_diff_deg:.2f}")
                 return True, f"CHANGING YAW {yaw_diff_deg:.2f}"
 
         self.local_logger.error("Could not run command")

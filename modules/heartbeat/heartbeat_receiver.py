@@ -45,7 +45,7 @@ class HeartbeatReceiver:
         """
         message = self.connection.recv_match(type="HEARTBEAT", blocking=True, timeout=2)
 
-        if message == "HEARTBEAT":
+        if message is not None and message.get_type() == "HEARTBEAT":
             self.status = "Connected"
             self.missed = 0
             self.local_logger.info("Heartbeat message received")
@@ -56,6 +56,7 @@ class HeartbeatReceiver:
             if self.missed == 5:
                 self.status = "Disconnected"
                 self.local_logger.warning("Drone Disconnected")
+                return False, self.status
 
         return True, self.status
 

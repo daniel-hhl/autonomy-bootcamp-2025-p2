@@ -57,16 +57,17 @@ def heartbeat_receiver_worker(
 
     if not creation_status:
         local_logger.error("Could not initialize Heartbeat Receiver")
-    local_logger.info("Could not initialize Heartbeat Receiver")
+    else:
+        # Main loop: do work.
+        while not controller.is_exit_requested():
+            controller.check_pause()
 
-    # Main loop: do work.
-    while not controller.is_exit_requested:
-        controller.check_pause()
-
-        value, status = receiver.run()
-        if not value:
-            local_logger.warning("Failed to receive Heartbeat")
-        output_queue.queue.put(status)
+            value, status = receiver.run()
+            if not value:
+                local_logger.warning("Failed to receive Heartbeat")
+                break
+            output_queue.queue.put(status)
+    connection.close()
 
 
 # =================================================================================================

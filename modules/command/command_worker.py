@@ -59,18 +59,18 @@ def command_worker(
 
     if not value:
         local_logger.error("Could not create command instance")
+    else:
+        # Main loop: do work.
+        while not controller.is_exit_requested():
+            controller.check_pause()
 
-    # Main loop: do work.
-    while not controller.is_exit_requested():
-        controller.check_pause()
+            data = telemetry_queue.queue.get()
+            if data is not None:
+                local_logger.info("Received telemetry data")
 
-        data = telemetry_queue.queue.get()
-        if data is not None:
-            local_logger.info("Received telemetry data")
-
-        result, change = command_object.run(data)
-        if result and data is not None:
-            output_queue.queue.put(change)
+            result, change = command_object.run(data)
+            if result and data is not None:
+                output_queue.queue.put(change)
 
 
 # =================================================================================================

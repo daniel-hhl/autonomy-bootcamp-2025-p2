@@ -108,7 +108,13 @@ class Telemetry:
         position_msg = None
 
         while start_time + self.timeout > time.time():
-            msg = self.connection.recv_match(type=("LOCAL_POSITION_NED", "ATTITUDE"), blocking=True)
+            msg = self.connection.recv_match(
+                type=("LOCAL_POSITION_NED", "ATTITUDE"), blocking=True, timeout=2
+            )
+
+            # if message is none
+            if msg is None:
+                continue
 
             # Read MAVLink message LOCAL_POSITION_NED (32)
             if msg.get_type() == "LOCAL_POSITION_NED":
@@ -139,8 +145,7 @@ class Telemetry:
                 )
                 self.logger.info("Created telemetry data")
                 return True, tel_data
-
-        # if message could not be received in time
+        # message could not be received in time range
         self.local_logger.error("Did not receive telemetry data within timeout frame")
         return False, None
 

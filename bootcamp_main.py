@@ -225,19 +225,16 @@ def main() -> int:
 
     main_logger.info("Started")
 
-    time.sleep(2)
-    controller.request_pause()
-
-    main_logger.info("Paused", True)
-
-    time.sleep(4)
-    controller.request_resume()
-    main_logger.info("Resumed", True)
-
-    time.sleep(2)
-
     # Main's work: read from all queues that output to main, and log any commands that we make
     # Continue running for 100 seconds or until the drone disconnects
+    start_time = time.time()
+    while (time.time() - start_time) < 100:
+        if not heartbeat_to_main_queue.queue.empty():
+            if heartbeat_to_main_queue.queue.get_nowait() == "Disconnected":
+                break
+            main_logger.info(f"Heartbeat Status: {heartbeat_to_main_queue.queue.get_nowait()}")
+        if not command_to_main_queue.queue.empty():
+            main_logger.info(f"Command info: {command_to_main_queue.queue.get_nowait()}")
 
     # Stop the processes
     controller.request_exit()
