@@ -55,6 +55,7 @@ def heartbeat_sender_worker(
     # Check if connection can be established
     if not value:
         local_logger.error("Failed to establish heartbeat sender", True)
+        return
 
     # Main loop: do work.
     while not controller.is_exit_requested():

@@ -55,8 +55,6 @@ def stop(
     Stop the workers.
     """
     controller.request_exit()
-    queue.fill_and_drain_queue()
-
 
 def read_queue(
     queue: queue_proxy_wrapper.QueueProxyWrapper,
@@ -66,10 +64,13 @@ def read_queue(
     """
     Read and print the output queue.
     """
-    while not controller.is_exit_requested():
-        if not queue.queue.empty():
+    while True:
+        try:
             status = queue.queue.get(timeout=1)
-            main_logger.info(f"Heartbeat status {status}")
+            main_logger.info(f"Heartbeat status: {status}")
+        except:
+            if controller.is_exit_requested() and queue.queue.empty():
+                break
 
 
 # =================================================================================================

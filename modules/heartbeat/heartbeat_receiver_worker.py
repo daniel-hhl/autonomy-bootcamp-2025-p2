@@ -65,9 +65,8 @@ def heartbeat_receiver_worker(
             value, status = receiver.run()
             if not value:
                 local_logger.warning("Failed to receive Heartbeat")
-                break
             output_queue.queue.put(status)
-    connection.close()
+        connection.close()
 
 
 # =================================================================================================

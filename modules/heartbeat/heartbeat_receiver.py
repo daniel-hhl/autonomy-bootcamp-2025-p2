@@ -43,21 +43,23 @@ class HeartbeatReceiver:
         If disconnected for over a threshold number of periods,
         the connection is considered disconnected.
         """
-        message = self.connection.recv_match(type="HEARTBEAT", blocking=True, timeout=2)
-
-        if message is not None and message.get_type() == "HEARTBEAT":
-            self.status = "Connected"
-            self.missed = 0
-            self.local_logger.info("Heartbeat message received")
-
-        else:
+        try:
+            message = self.connection.recv_match(type="HEARTBEAT", blocking=True, timeout=1)
+            if message is not None and message.get_type() == "HEARTBEAT":
+                self.status = "Connected"
+                self.missed = 0
+                self.local_logger.info("Heartbeat message received")
+            else:
+                self.missed += 1
+                self.local_logger.warning(f"{self.missed} heartbeat(s) missed")
+        except Exception as e:
+            self.local_logger.warning(f"Connection error: {e}")
             self.missed += 1
-            self.local_logger.warning(f"{self.missed} heartbeat(s) missed")
-            if self.missed == 5:
-                self.status = "Disconnected"
-                self.local_logger.warning("Drone Disconnected")
-                return False, self.status
-
+    
+        if self.missed >= 5:
+            self.status = "Disconnected"
+            self.local_logger.warning("Drone Disconnected")
+    
         return True, self.status
 
 
